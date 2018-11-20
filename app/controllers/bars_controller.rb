@@ -1,6 +1,7 @@
 class BarsController < ApplicationController
 	def results
 		@userlocation = Userlocation.last
+		@geocodeduserlocation = Geocoder.search(@userlocation.searchterm)
 	end
 
 	def new
