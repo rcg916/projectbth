@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+	root 'userlocations#search'
+	resources :userlocations, only: [:create]
+	resources :bars
+	get '/results', to: 'bars#results'
 end

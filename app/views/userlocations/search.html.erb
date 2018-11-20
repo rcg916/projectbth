@@ -1,0 +1,11 @@
+<div class="col-10 offset-1 main">
+
+	<h3>search page</h3>
+
+	<%= simple_form_for @userlocation do |f| %>
+		<%= f.input :searchterm %>
+		<br />
+		<%= f.submit 'Find Bars', class: 'btn btn-primary' %>
+	<% end %>
+
+</div>
