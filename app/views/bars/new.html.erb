@@ -1,0 +1,9 @@
+<h3>New bar</h3>
+
+<%= simple_form_for @bar do |f| %>
+	<%= f.input :name, label: 'Name:' %>
+	<%= f.input :address, label: 'Address:' %>
+	<%= f.input :description, label: 'Description:' %>
+	<br />
+	<%= f.submit 'Create Bar', class: 'btn btn-primary' %>
+<% end %>
