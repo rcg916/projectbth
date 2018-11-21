@@ -2,14 +2,19 @@
 
 	<h3>Results page</h3>
 
-	<%= @userlocation.searchterm %>
-
-	<%= @geocodeduserlocation.last.inspect %>
+	<h5>Search term: <%= @userlocation.searchterm %></h5>
 
 	<%= @geocodeduserlocation.last.coordinates %>
 	<%= @geocodeduserlocation.last.latitude %>
 	<%= @geocodeduserlocation.last.longitude %>
 	<%= @geocodeduserlocation.last.city %>
 	<%= @geocodeduserlocation.last.state %>
+
+	<% @nearbybars.each do |bar| %>
+		<%= bar.name %>
+		<%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %>
+		<%= bar.inspect %>
+		<%= bar.zipcode %>
+	<% end %>
 
 </div>
