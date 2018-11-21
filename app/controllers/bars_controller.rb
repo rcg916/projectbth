@@ -1,8 +1,13 @@
 class BarsController < ApplicationController
+	def show
+		@bar = Bar.find(params[:id])
+	end
+
 	def results
 		@userlocation = Userlocation.last
 		@geocodeduserlocation = Geocoder.search(@userlocation.searchterm)
-		@nearbybars = Bar.near(@geocodeduserlocation.last.coordinates) # temporary
+		@withindistance = @userlocation.withindistance
+		@nearbybars = Bar.near(@geocodeduserlocation.last.coordinates, @withindistance, units: :mi) # temporary
 	end
 
 	def new
@@ -24,6 +29,6 @@ class BarsController < ApplicationController
   private
 
   def bar_params
-    params.require(:bar).permit(:name, :address, :description)
+    params.require(:bar).permit(:name, :address, :description, :livemusic, :pool, :darts)
   end
 end

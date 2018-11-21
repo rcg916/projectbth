@@ -5,7 +5,14 @@
 
 	<div class="box">
 		<%= simple_form_for @userlocation do |f| %>
-			<%= f.input :searchterm, label: 'Enter an address, city/state, or zip-code:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841', placeholder: 'Where do you feel like going?' %>
+			<div class="row">
+				<div class="col-8">
+					<%= f.input :searchterm, label: 'Enter an address, city/state, or zip-code:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841' %>
+				</div>
+				<div class="col-4">
+					<%= f.input :withindistance, label: 'Enter distance for search:', hint: 'in miles' %>
+				</div>
+			</div>
 			<br />
 			<%= f.submit 'Find Bars', class: 'btn btn-primary' %>
 		<% end %>

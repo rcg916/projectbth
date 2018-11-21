@@ -1,9 +1,25 @@
-<h3>New bar</h3>
+<div class="col-10 offset-1 main">
 
-<%= simple_form_for @bar do |f| %>
-	<%= f.input :name, label: 'Name:' %>
-	<%= f.input :address, label: 'Address:' %>
-	<%= f.input :description, label: 'Description:' %>
+	<h3>Add a New Bar</h3>
 	<br />
-	<%= f.submit 'Create Bar', class: 'btn btn-primary' %>
-<% end %>
+
+	<%= simple_form_for @bar do |f| %>
+		<%= f.input :name, label: 'Name:' %>
+		<%= f.input :address, label: 'Address:' %>
+		<%= f.input :description, label: 'Description:' %>
+	
+		<div class="col-4 checkbox">
+			<%= f.input :livemusic, as: :boolean, label: 'Live Music?' %>
+		</div>
+		<div class="col-4 checkbox">
+			<%= f.input :pool, as: :boolean, label: 'Pool Tables?' %>
+		</div>
+		<div class="col-4 checkbox">
+			<%= f.input :darts, as: :boolean, label: 'Dart Boards?' %>
+		</div>
+		
+		<br />
+		<%= f.submit 'Create Bar', class: 'btn btn-primary' %>
+	<% end %>
+
+</div>

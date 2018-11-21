@@ -11,6 +11,6 @@ class UserlocationsController < ApplicationController
   private
 
   def userlocation_params
-    params.require(:userlocation).permit(:searchterm)
+    params.require(:userlocation).permit(:searchterm, :withindistance)
   end
 end
