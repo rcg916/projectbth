@@ -4,21 +4,25 @@
 
 	<h5>Search term: <%= @userlocation.searchterm %></h5>
 
-	<p>Search area: <%= @geocodeduserlocation.last.city %>, <%= @geocodeduserlocation.last.state %></p>
-	<%# @geocodeduserlocation.last.coordinates %>
-	<%# @geocodeduserlocation.last.latitude %>
-	<%# @geocodeduserlocation.last.longitude %>
+	Searching for 
+	<%= @userlocation.wantedactivities %>
+	in <%= @geocodeduserlocation.last.city %>, <%= @geocodeduserlocation.last.state %>
+	<hr />
 
-	<h3>Bars within <%= @withindistance.round %> miles:</h3><br />
+	<h3>Bars within <%= @withindistance.round %> miles:</h3>
+	<br />
 
-	<% @nearbybars.each do |bar| %>
-		<div>
+	<% @nearbybars.sort_by{ |t| [(t.activities & @userlocation.wantedactivities).count * -1, t.distance_from(@geocodeduserlocation.last.coordinates)] }.each do |bar| %>
+
+		<div class="box">
 			<h4><%= link_to bar.name, bar_path(bar) %></h4>
-			<small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away | 
-				<%= bar.zipcode %></small><br />
-			Darts? <%= bar.darts %>
+			<p><small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small></p>
+			Featuring <%= bar.activities %><br />
+			<% @incommon = bar.activities & @userlocation.wantedactivities %>
+			Activities in common with search: <%= @incommon %>
+			<p><%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %></p>
 		</div>
-		<br />
+		
 	<% end %>
 
 </div>
