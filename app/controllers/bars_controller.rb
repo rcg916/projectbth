@@ -6,8 +6,12 @@ class BarsController < ApplicationController
 	def results
 		@userlocation = Userlocation.last
 		@geocodeduserlocation = Geocoder.search(@userlocation.searchterm)
-		@withindistance = @userlocation.withindistance
-		@nearbybars = Bar.near(@geocodeduserlocation.last.coordinates, @withindistance, units: :mi) # temporary
+		if @userlocation.withindistance != nil
+			@withindistance = @userlocation.withindistance
+		else
+			@withindistance = 20.0
+		end
+		@nearbybars = Bar.near(@geocodeduserlocation.last.coordinates, @withindistance, units: :mi)
 	end
 
 	def new
@@ -23,6 +27,14 @@ class BarsController < ApplicationController
 		@zipcode = sp1.split(" ")[1]
 		Bar.last.update_attribute :state, @state
 		Bar.last.update_attribute :zipcode, @zipcode
+		@temp = []
+		Bar.last.attributes.except("id", "created_at", "updated_at", "name", "description", "address",
+		 "latitude", "longitude", "city", "state", "zipcode").each do |name, value|
+			if value == true
+			  @temp << name
+			end	
+		end
+		Bar.last.update_attribute :activities, @temp
     redirect_to results_path
   end
 

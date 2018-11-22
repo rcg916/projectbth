@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_21_060818) do
+ActiveRecord::Schema.define(version: 2018_11_22_054658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_060818) do
     t.boolean "livemusic", default: false
     t.boolean "pool", default: false
     t.boolean "darts", default: false
+    t.string "activities", default: [], array: true
   end
 
   create_table "userlocations", force: :cascade do |t|
@@ -36,6 +37,10 @@ ActiveRecord::Schema.define(version: 2018_11_21_060818) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "withindistance"
+    t.string "wantedactivities", default: [], array: true
+    t.boolean "livemusic", default: false
+    t.boolean "pool", default: false
+    t.boolean "darts", default: false
   end
 
 end

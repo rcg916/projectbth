@@ -1,9 +1,19 @@
-<h3>bar show page</h3>
+<div class="col-10 offset-1 main">
 
-<%= @bar.name %>
-<%= @bar.address %>
-<%= @bar.city %>
+	<h3>bar show page</h3>
 
-Darts? <%= @bar.darts %>
-Pool? <%= @bar.pool %>
-Live Music? <%= @bar.livemusic %>
+	<%= @bar.name %>
+	<%= @bar.address %>
+	<%= @bar.city %>
+	<%= @bar.activities %>
+
+	Darts? <%= @bar.darts %>
+	Pool? <%= @bar.pool %>
+	Live Music? <%= @bar.livemusic %>
+
+	<% Userlocation.last.attributes.except("id", "created_at", "updated_at", "withindistance").each do |name, value| %>
+		<%= name %>
+		<%= value %>
+	<% end %>
+
+</div>

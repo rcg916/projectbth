@@ -9,7 +9,7 @@
 	<%# @geocodeduserlocation.last.latitude %>
 	<%# @geocodeduserlocation.last.longitude %>
 
-	<h3>Bars within <%= @userlocation.withindistance %> miles:</h3><br />
+	<h3>Bars within <%= @withindistance.round %> miles:</h3><br />
 
 	<% @nearbybars.each do |bar| %>
 		<div>
