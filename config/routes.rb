@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 	resources :userlocations, only: :create
 	resources :bars do
 		resources :brands, only: :create
+		resources :photos, only: :create
 	end
 	get '/results', to: 'bars#results'
 end

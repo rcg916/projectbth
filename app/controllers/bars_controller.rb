@@ -2,6 +2,7 @@
 	def show
 		@bar = Bar.find(params[:id])
 		@brand = Brand.new
+		@photo = Photo.new
 	end
 
 	def results

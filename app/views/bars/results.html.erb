@@ -22,7 +22,15 @@
 			Featuring <%= bar.activities %><br />
 			<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
 			Activities in common with search: <%= @incommon %><br />
-			<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %>
+			<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %><br /><br />
+
+			<div>
+				<% if bar.photos.present? %>
+					<%= image_tag((bar.photos.last.picture.url), class: 'bar_image') %><br />
+					<%= bar.photos.last.caption %>
+				<% end %>
+			</div>
+
 		</div>
 
 	<% end %>

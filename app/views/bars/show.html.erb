@@ -83,6 +83,23 @@
 
 	<div class="clear"></div>
 
+	<%= simple_form_for @photo, url: bar_photos_path(@bar) do |f| %>
+		<%= f.input :picture %>
+		<%= f.input :caption, label: 'Caption or Copyright Info:' %>
+		<br />
+		<%= f.submit 'Add a Photo', class: 'btn btn-primary' %>
+	<% end %>
+
+	<br /><br />
+
+	<div>
+		<% if @bar.photos.present? %>
+			<%= image_tag((@bar.photos.last.picture.url), class: 'bar_image') %><br />
+			<%= @bar.photos.last.caption %>
+		<% end %>
+	</div>
+
+
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
