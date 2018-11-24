@@ -16,7 +16,9 @@
 
 		<div class="box">
 			<h4><%= link_to bar.name, bar_path(bar) %></h4>
-			<p><small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small></p>
+			<small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small>
+			<br />
+			<%= bar.description %><br /><br />
 			Featuring <%= bar.activities %><br />
 			<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
 			Activities in common with search: <%= @incommon %><br />

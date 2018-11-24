@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_22_054658) do
+ActiveRecord::Schema.define(version: 2018_11_23_234152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(version: 2018_11_22_054658) do
     t.boolean "pool", default: false
     t.boolean "darts", default: false
     t.string "activities", default: [], array: true
+    t.boolean "cornhole", default: false
+    t.boolean "food", default: false
+    t.boolean "karaoke", default: false
+    t.boolean "dancing", default: false
+  end
+
+  create_table "brands", force: :cascade do |t|
+    t.string "name"
+    t.string "brandtype"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "bar_id"
   end
 
   create_table "userlocations", force: :cascade do |t|
@@ -41,6 +53,10 @@ ActiveRecord::Schema.define(version: 2018_11_22_054658) do
     t.boolean "livemusic", default: false
     t.boolean "pool", default: false
     t.boolean "darts", default: false
+    t.boolean "cornhole", default: false
+    t.boolean "food", default: false
+    t.boolean "karaoke", default: false
+    t.boolean "dancing", default: false
   end
 
 end

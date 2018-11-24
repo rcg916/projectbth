@@ -18,6 +18,7 @@ class UserlocationsController < ApplicationController
   private
 
   def userlocation_params
-    params.require(:userlocation).permit(:searchterm, :withindistance, :livemusic, :pool, :darts)
+    params.require(:userlocation).permit(:searchterm, :withindistance, :livemusic, :pool, :darts, :cornhole, 
+      :karaoke, :dancing, :food)
   end
 end

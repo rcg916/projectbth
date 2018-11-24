@@ -4,7 +4,6 @@
 
 	<%= @bar.address %><br />
 	<%= @bar.activities %><br />
-	<%= @bar.latitude %>
 
 	Darts? <%= @bar.darts %><br />
 	Pool? <%= @bar.pool %><br />
@@ -41,6 +40,20 @@
 	<% Userlocation.last.attributes.except("id", "created_at", "updated_at", "withindistance").each do |name, value| %>
 		<%= name %>
 		<%= value %>
+	<% end %>
+
+	<% @bar.brands.each do |brand| %>
+		<%= brand.name %>
+		<%= brand.brandtype %>
+	<% end %>
+
+
+	<div class="clear"></div>
+	<hr /><br />
+	<%= simple_form_for @brand, url: bar_brands_path(@bar) do |f| %>
+	  <%= f.input :name %>
+	  <%= f.input :brandtype %>
+	  <%= f.submit "Add a Brand", class: 'btn btn-primary' %>
 	<% end %>
 
 </div>

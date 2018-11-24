@@ -1,6 +1,7 @@
  class BarsController < ApplicationController
 	def show
 		@bar = Bar.find(params[:id])
+		@brand = Brand.new
 	end
 
 	def results
@@ -41,6 +42,7 @@
   private
 
   def bar_params
-    params.require(:bar).permit(:name, :address, :description, :livemusic, :pool, :darts)
+    params.require(:bar).permit(:name, :address, :description, :livemusic, :pool, :darts, :cornhole, :karaoke, 
+    	:dancing, :food)
   end
 end
