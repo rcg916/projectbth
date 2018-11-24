@@ -1,0 +1,32 @@
+<h3>Edit bar</h3>
+
+<%= simple_form_for @bar do |f| %>
+	<%= f.input :name, label: 'Name:' %>
+	<%= f.input :address, label: 'Address:' %>
+	<%= f.input :description, label: 'Description:' %>
+
+	<div class="col-4 checkbox">
+		<%= f.input :livemusic, as: :boolean, label: 'Live Music?' %>
+	</div>
+	<div class="col-4 checkbox">
+		<%= f.input :pool, as: :boolean, label: 'Pool Tables?' %>
+	</div>
+	<div class="col-4 checkbox">
+		<%= f.input :darts, as: :boolean, label: 'Dart Boards?' %>
+	</div>
+	<div class="col-4 checkbox">
+		<%= f.input :cornhole, as: :boolean, label: 'Cornhole?' %>
+	</div>
+	<div class="col-4 checkbox">
+		<%= f.input :karaoke, as: :boolean, label: 'Karaoke?' %>
+	</div>
+	<div class="col-4 checkbox">
+		<%= f.input :dancing, as: :boolean, label: 'Dancing?' %>
+	</div>
+	<div class="col-4 checkbox">
+		<%= f.input :food, as: :boolean, label: 'Food?' %>
+	</div>
+	
+	<br />
+	<%= f.submit 'Update Bar', class: 'btn btn-primary' %>
+<% end %>

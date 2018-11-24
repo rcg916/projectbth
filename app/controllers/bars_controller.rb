@@ -19,6 +19,30 @@
 		@bar = Bar.new
 	end
 
+	def edit
+		@bar = Bar.find(params[:id])
+	end
+
+	def update
+	  @bar = Bar.find(params[:id])
+	  @bar.update_attributes(bar_params)
+	  @temp = []
+		@bar.attributes.except("id", "created_at", "updated_at", "name", "description", "address", 
+			"latitude", "longitude", "city", "state", "zipcode").each do |name, value|
+			if value == true
+			  @temp << name
+			end	
+		end
+		@bar.update_attribute :activities, @temp
+	  redirect_to bar_path(@bar)
+	end
+
+	def destroy
+	  @bar = Bar.find(params[:id])
+	  @bar.destroy
+	  redirect_to root_path
+	end
+
 	def create
     Bar.create(bar_params)
     @city = Bar.last.address.split(', ')[1]
@@ -35,9 +59,9 @@
 			  @temp << name
 			end	
 		end
-		Bar.last.update_attribute :activities, @temp
-    redirect_to results_path
-  end
+			Bar.last.update_attribute :activities, @temp
+    	redirect_to results_path
+  	end
 
   private
 

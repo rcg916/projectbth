@@ -1,5 +1,5 @@
 class Bar < ApplicationRecord
-	has_many :brands
+	has_many :brands, dependent: :destroy
 	
 	geocoded_by :address
   reverse_geocoded_by :latitude, :longitude

@@ -3,4 +3,13 @@ class Brand < ApplicationRecord
 
 	validates :name, presence: true
 	validates :brandtype, presence: true
+
+	BRANDTYPE = {
+		'Premium Beer': 'beer',
+		'Premium Vodka': 'vodka'
+	}
+
+	def inv_brandtype
+		BRANDTYPE.invert[self.brandtype]
+	end
 end
