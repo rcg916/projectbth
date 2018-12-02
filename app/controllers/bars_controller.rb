@@ -60,7 +60,7 @@
 			  @temp << name
 			end	
 		end
-			Bar.last.update_attribute :activities, @temp
+		Bar.last.update_attribute :activities, @temp
     	redirect_to results_path
   	end
 
@@ -68,6 +68,6 @@
 
   def bar_params
     params.require(:bar).permit(:name, :address, :description, :livemusic, :pool, :darts, :cornhole, :karaoke, 
-    	:dancing, :food)
+    	:dancing, :food, :beer, :vodka, :whiskey, :wine)
   end
 end

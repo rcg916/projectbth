@@ -29,7 +29,19 @@
 			<div class="col-4 checkbox">
 				<%= f.input :food, as: :boolean, label: 'Food?' %>
 			</div>
-		
+			<div class="col-4 checkbox">
+				<%= f.input :beer, as: :boolean, label: 'Premium Beer?' %>
+			</div>
+			<div class="col-4 checkbox">
+				<%= f.input :wine, as: :boolean, label: 'Premium Wine?' %>
+			</div>
+			<div class="col-4 checkbox">
+				<%= f.input :whiskey, as: :boolean, label: 'Premium Whiskey?' %>
+			</div>
+			<div class="col-4 checkbox">
+				<%= f.input :vodka, as: :boolean, label: 'Premium Vodka?' %>
+			</div>
+
 			<br />
 			<%= f.submit 'Find Bars', class: 'btn btn-primary' %>
 		<% end %>

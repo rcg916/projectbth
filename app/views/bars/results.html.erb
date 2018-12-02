@@ -12,27 +12,68 @@
 	<h3>Bars within <%= @withindistance.round %> miles:</h3>
 	<br />
 
+
+
+
+
+
 	<% @nearbybars.sort_by{ |t| [(t.activities & @userlocation.wantedactivities).count * -1, t.distance_from(@geocodeduserlocation.last.coordinates)] }.each do |bar| %>
 
-		<div class="box">
-			<h4><%= link_to bar.name, bar_path(bar) %></h4>
-			<small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small>
-			<br />
-			<%= bar.description %><br /><br />
-			Featuring <%= bar.activities %><br />
-			<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
-			Activities in common with search: <%= @incommon %><br />
-			<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %><br /><br />
+		<div class="row box">
+			<div class="col-6">
+				<h3><%= link_to bar.name, bar_path(bar) %></h3>
+				<small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small>
+				<br />
+				<%= bar.description %><br /><br />
+				Featuring <%= bar.activities %><br />
+				<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
+				Activities in common with search: <%= @incommon %><br />
+				<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %><br /><br />
 
-			<div>
+				<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
+				<% if @perc >= 100 %>
+					<div class="boom">
+						<div class="row">
+							<div class="col-2">
+							<%= image_tag 'star-struck-icon.png', class: 'boomface' %>
+							</div>
+							<div class="col-10">
+							<h5>BOOM! Party Alert!<br /><small>This bar has all of the things you were looking for.</small></h5>
+							</div>
+						</div>
+					</div>
+				<% elsif @perc < 100 && @perc > 49 %>
+					<h5>Maybe?<br /><small>This bar has most of what you are looking for.</small></h5>
+				<% end %>
+				<br />
+
+				<% bar.brands.order('brandtype ASC').each do |brand| %>
+					<% if @incommon.include?(brand.brandtype) == true %>
+						<%= brand.inv_brandtype %>: <%= brand.name %>
+					<% end %>
+				<% end %>
+				<br />
+
+			</div>
+
+
+
+
+			<div class="col-6">
 				<% if bar.photos.present? %>
 					<%= image_tag((bar.photos.last.picture.url), class: 'bar_image') %><br />
 					<%= bar.photos.last.caption %>
+				<% else %>
+					<h5>We need a photo for <%= bar.name %>. Have one? Email us! :)</h5>
 				<% end %>
 			</div>
 
 		</div>
 
 	<% end %>
+
+
+
+
 
 </div>

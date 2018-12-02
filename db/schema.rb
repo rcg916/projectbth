@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_040849) do
+ActiveRecord::Schema.define(version: 2018_11_24_214522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 2018_11_24_040849) do
     t.boolean "food", default: false
     t.boolean "karaoke", default: false
     t.boolean "dancing", default: false
+    t.boolean "beer", default: false
+    t.boolean "vodka", default: false
+    t.boolean "whiskey", default: false
+    t.boolean "wine", default: false
   end
 
   create_table "brands", force: :cascade do |t|
@@ -65,6 +69,10 @@ ActiveRecord::Schema.define(version: 2018_11_24_040849) do
     t.boolean "food", default: false
     t.boolean "karaoke", default: false
     t.boolean "dancing", default: false
+    t.boolean "beer", default: false
+    t.boolean "vodka", default: false
+    t.boolean "whiskey", default: false
+    t.boolean "wine", default: false
   end
 
 end
