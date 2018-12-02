@@ -8,38 +8,56 @@
 			<%= f.input :searchterm, label: 'Enter an address, city/state, or zip-code:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841' %>
 			<%= f.input :withindistance, label: 'Enter distance for search:', hint: 'in miles' %>
 			<br />
-			<div class="col-4 checkbox">
-				<%= f.input :livemusic, as: :boolean, label: 'Live Music?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :pool, as: :boolean, label: 'Pool Tables?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :darts, as: :boolean, label: 'Dart Boards?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :cornhole, as: :boolean, label: 'Cornhole?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :karaoke, as: :boolean, label: 'Karaoke?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :dancing, as: :boolean, label: 'Dancing?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :food, as: :boolean, label: 'Food?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :beer, as: :boolean, label: 'Premium Beer?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :wine, as: :boolean, label: 'Premium Wine?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :whiskey, as: :boolean, label: 'Premium Whiskey?' %>
-			</div>
-			<div class="col-4 checkbox">
-				<%= f.input :vodka, as: :boolean, label: 'Premium Vodka?' %>
+
+			<div class="row">
+				<div class="col-6">
+
+					<h5>Stuff to do</h5>
+					<br />
+
+					<div class="col-4 checkbox">
+						<%= f.input :livemusic, as: :boolean, label: 'Live Music?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :pool, as: :boolean, label: 'Pool Tables?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :darts, as: :boolean, label: 'Dart Boards?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :cornhole, as: :boolean, label: 'Cornhole?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :karaoke, as: :boolean, label: 'Karaoke?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :dancing, as: :boolean, label: 'Dancing?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :food, as: :boolean, label: 'Food?' %>
+					</div>
+				</div>
+
+				<div class="col-6">
+
+					<h5>Stuff to drink</h5>
+					<br />
+
+					<div class="col-4 checkbox">
+						<%= f.input :beer, as: :boolean, label: 'Premium Beer?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :wine, as: :boolean, label: 'Premium Wine?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :whiskey, as: :boolean, label: 'Premium Whiskey?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :vodka, as: :boolean, label: 'Premium Vodka?' %>
+					</div>
+
+				</div>
+
 			</div>
 
 			<br />

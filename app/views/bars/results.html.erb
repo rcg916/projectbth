@@ -2,17 +2,22 @@
 
 	<h3>Results page</h3>
 
+	<div class="float-right">
+		<button><%= link_to "Meh. Let's try again.", root_path, class: 'btn bth-primary' %></button>
+	</div>
+
 	<h5>Search term: <%= @userlocation.searchterm %></h5>
 
-	Searching for 
-	<%= @userlocation.wantedactivities %>
+	Searching for
+	<% @userlocation.wantedactivities.each do |activity| %>
+		<%= activity %>
+	<% end %>
+	
 	in <%= @geocodeduserlocation.last.city %>, <%= @geocodeduserlocation.last.state %>
 	<hr />
 
 	<h3>Bars within <%= @withindistance.round %> miles:</h3>
 	<br />
-
-
 
 
 
@@ -24,27 +29,45 @@
 				<h3><%= link_to bar.name, bar_path(bar) %></h3>
 				<small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small>
 				<br />
-				<%= bar.description %><br /><br />
-				Featuring <%= bar.activities %><br />
+				<%= bar.description %>
+				<br /><br />
+				Featuring 
+				<% bar.activities.each do |activity| %>
+				<%= activity %>
+				<% end %>
+				<br />
 				<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
-				Activities in common with search: <%= @incommon %><br />
+				Activities in common with search: 
+				<% @incommon.each do |activity| %>
+				<%= activity %>
+				<% end %>
+				<br />
 				<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %><br /><br />
 
+				<!--display alert if match, or display other msg -->
 				<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
-				<% if @perc >= 100 %>
-					<div class="boom">
-						<div class="row">
-							<div class="col-2">
-							<%= image_tag 'star-struck-icon.png', class: 'boomface' %>
+				<div class="col-10 offset-1">
+
+					<% if @perc >= 100 %>
+						<div class="row boom">
+							<div class="col-4">
+								<%= image_tag 'star-struck-icon.png', class: 'boomface' %>
 							</div>
-							<div class="col-10">
-							<h5>BOOM! Party Alert!<br /><small>This bar has all of the things you were looking for.</small></h5>
+							<div class="col-8">
+								<h5>BOOM! Party Alert!<br /><small>This bar has all of the things you were looking for.</small></h5>
 							</div>
 						</div>
-					</div>
-				<% elsif @perc < 100 && @perc > 49 %>
-					<h5>Maybe?<br /><small>This bar has most of what you are looking for.</small></h5>
-				<% end %>
+
+					<% elsif @perc < 100 && @perc > 49 %>
+
+						
+						<div class="maybe">
+							<h5>Maybe? Could be?<br /><small>This bar has most of what you are looking for.</small></h5>
+						</div>
+
+					<% end %>
+
+				</div>
 				<br />
 
 				<% bar.brands.order('brandtype ASC').each do |brand| %>
