@@ -5,7 +5,7 @@ class Brand < ApplicationRecord
 	validates :brandtype, presence: true
 
 	BRANDTYPE = {
-		'Premium Beer': 'beer',
+		'Craft Beer': 'beer',
 		'Premium Vodka': 'vodka'
 	}
 

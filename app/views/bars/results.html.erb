@@ -8,34 +8,32 @@
 
 	<h5>Search term: <%= @userlocation.searchterm %></h5>
 
-	Searching for
+	Searching for bars with 
 	<% @userlocation.wantedactivities.each do |activity| %>
 		<%= activity %>
 	<% end %>
 	
 	in <%= @geocodeduserlocation.last.city %>, <%= @geocodeduserlocation.last.state %>
+
 	<hr />
 
 	<h3>Bars within <%= @withindistance.round %> miles:</h3>
 	<br />
 
-
-
-
 	<% @nearbybars.sort_by{ |t| [(t.activities & @userlocation.wantedactivities).count * -1, t.distance_from(@geocodeduserlocation.last.coordinates)] }.each do |bar| %>
 
 		<div class="row box">
+			<!-- left column -->
 			<div class="col-6">
+				<small><em>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</em></small><br />
 				<h3><%= link_to bar.name, bar_path(bar) %></h3>
-				<small>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</small>
-				<br />
-				<%= bar.description %>
-				<br /><br />
-				Featuring 
+				<%= bar.address %><br />
+
 				<% bar.activities.each do |activity| %>
-				<%= activity %>
+					<span class="badge badge-success"><%= activity.capitalize %></span>
 				<% end %>
 				<br />
+
 				<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
 				Activities in common with search: 
 				<% @incommon.each do |activity| %>
@@ -43,6 +41,7 @@
 				<% end %>
 				<br />
 				<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %><br /><br />
+
 
 				<!--display alert if match, or display other msg -->
 				<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
@@ -58,44 +57,82 @@
 							</div>
 						</div>
 
-					<% elsif @perc < 100 && @perc > 49 %>
-
+					<% elsif @perc < 100 && @perc > 65 %>
 						
 						<div class="maybe">
-							<h5>Maybe? Could be?<br /><small>This bar has most of what you are looking for.</small></h5>
+							<h5>Pretty Good!<br /><small>This bar has most of what you are looking for.</small></h5>
+						</div>
+
+					<% elsif @perc <= 65 && @perc > 39 %>
+						
+						<div class="maybe">
+							<h5>Maybe? Could be?<br /><small>This bar has some of what you are looking for.</small></h5>
 						</div>
 
 					<% end %>
 
 				</div>
+				<!-- end alert -->
+
 				<br />
 
-				<% bar.brands.order('brandtype ASC').each do |brand| %>
-					<% if @incommon.include?(brand.brandtype) == true %>
-						<%= brand.inv_brandtype %>: <%= brand.name %>
-					<% end %>
+
+				<!-- show brands for bar, if they exist -->
+				<% if bar.brands.present? %>
+
+					<div>
+						<h5>Proudly serving these premium brands:</h5>
+
+						<% @barbrands = bar.brands.sort_by{ |t| [t.brandtype, t.name] } %>
+						<% @barbrands.each do |brand| %>
+							<%= brand.name %> (<%= brand.inv_brandtype %>)
+							<% if @barbrands.last != brand %>
+								,&nbsp;
+							<% end %>
+						<% end %>
+
+					</div>
+
 				<% end %>
-				<br />
+				<!-- END show brands -->
+
 
 			</div>
+			<!-- end left column -->
 
 
 
-
+			<!-- right column -->
 			<div class="col-6">
 				<% if bar.photos.present? %>
-					<%= image_tag((bar.photos.last.picture.url), class: 'bar_image') %><br />
-					<%= bar.photos.last.caption %>
+					<div>
+						<%= image_tag((bar.photos.last.picture.url), class: 'bar_image') %><br />
+						<%= bar.photos.last.caption %>
+					</div>
 				<% else %>
-					<h5>We need a photo for <%= bar.name %>. Have one? Email us! :)</h5>
+					<div>
+						<p class="text-center"><small>We need a photo for <%= bar.name %>. Have one? Email us! :)</small></p>
+					</div>
 				<% end %>
+
+				<br />
+
+				<div>
+					<%= bar.description %>
+				</div>
+				<br />
+
+				<%= link_to 'Directions', "https://www.google.com/maps/dir/?api=1&origin='#{@geocodeduserlocation.last.address}'+&destination='#{bar.address}'+&travelmode=driving", target: "_blank" %>
+
+				<br />
+				<small><em>For accurate directions, use an address in your Party Search</em></small>
+
 			</div>
+			<!-- end right column -->
 
 		</div>
 
 	<% end %>
-
-
 
 
 

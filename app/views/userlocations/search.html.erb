@@ -1,15 +1,22 @@
 <div class="col-10 offset-1 main">
 
-	<h3>ProjectBTH search page</h3>
+	<h3 class="text-center">What are you looking to do and what do you like to drink?</h3>
 	<br />
 
 	<div class="box">
 		<%= simple_form_for @userlocation do |f| %>
-			<%= f.input :searchterm, label: 'Enter an address, city/state, or zip-code:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841' %>
-			<%= f.input :withindistance, label: 'Enter distance for search:', hint: 'in miles' %>
+			<div class="row">
+				<div class="col-8">
+					<%= f.input :searchterm, label: 'Enter an address, city/state, zip-code, or landmark:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841 OR Golden One Center' %>
+				</div>
+				<div class="col-4">
+					<%= f.input :withindistance, label: 'Enter distance for search:', hint: 'Enter distance in miles' %>
+				</div>
+			</div>
 			<br />
 
-			<div class="row">
+
+			<div class="row boxes">
 				<div class="col-6">
 
 					<h5>Stuff to do</h5>
@@ -17,6 +24,9 @@
 
 					<div class="col-4 checkbox">
 						<%= f.input :livemusic, as: :boolean, label: 'Live Music?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :dancing, as: :boolean, label: 'Dancing?' %>
 					</div>
 					<div class="col-4 checkbox">
 						<%= f.input :pool, as: :boolean, label: 'Pool Tables?' %>
@@ -31,10 +41,13 @@
 						<%= f.input :karaoke, as: :boolean, label: 'Karaoke?' %>
 					</div>
 					<div class="col-4 checkbox">
-						<%= f.input :dancing, as: :boolean, label: 'Dancing?' %>
+						<%= f.input :sportstv, as: :boolean, label: 'Sports or TVs?' %>
 					</div>
 					<div class="col-4 checkbox">
 						<%= f.input :food, as: :boolean, label: 'Food?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :happyhour, as: :boolean, label: 'Happy Hour Specials?' %>
 					</div>
 				</div>
 
@@ -44,7 +57,7 @@
 					<br />
 
 					<div class="col-4 checkbox">
-						<%= f.input :beer, as: :boolean, label: 'Premium Beer?' %>
+						<%= f.input :beer, as: :boolean, label: 'Craft Beer?' %>
 					</div>
 					<div class="col-4 checkbox">
 						<%= f.input :wine, as: :boolean, label: 'Premium Wine?' %>
@@ -55,13 +68,19 @@
 					<div class="col-4 checkbox">
 						<%= f.input :vodka, as: :boolean, label: 'Premium Vodka?' %>
 					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :tequila, as: :boolean, label: 'Premium Tequila?' %>
+					</div>
+					<div class="col-4 checkbox">
+						<%= f.input :cocktails, as: :boolean, label: 'Specialty Cocktails?' %>
+					</div>
 
 				</div>
 
 			</div>
 
 			<br />
-			<%= f.submit 'Find Bars', class: 'btn btn-primary' %>
+			<%= f.submit 'Find Bars', class: 'btn btn-primary btn-lg btn-block' %>
 		<% end %>
 	</div>
 

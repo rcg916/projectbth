@@ -3,97 +3,126 @@
 	<h2><%= @bar.name %></h2>
 
 	<%= @bar.address %><br />
-	<%= @bar.activities %><br />
-
-	<!-- Display map if coordinates are present -->
-
-	<% if @bar.latitude.present? && @bar.longitude.present? %>
-
-	  <script>
-
-	    function initMap() {
-	      var myLatLng = {lat: <%= @bar.latitude %>, lng: <%= @bar.longitude%>};
-
-	      var map = new google.maps.Map(document.getElementById('map'), {
-	        zoom: 12,
-	        center: myLatLng
-	      });
-
-	      var marker = new google.maps.Marker({
-	        position: myLatLng,
-	        map: map,
-	        title: '<%= @bar.name %>'
-	      });
-	    }
-	  </script>
-
-	  <script async defer
-	  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_API_KEY"] %>&callback=initMap">
-	  </script>
-
-	  <div id="map"></div>
-
-  <% end %>
-
-  <!-- END MAP -->
-
-	<% Userlocation.last.attributes.except("id", "created_at", "updated_at", "withindistance").each do |name, value| %>
-		<%= name %>
-		<%= value %>
+ 
+	<% @bar.activities.each do |activity| %>
+		<span class="badge badge-success"><%= activity.capitalize %></span>
 	<% end %>
 
-	<br /><br />
-	<div>
-		<h3>Brands</h3>
+	<br />
 
-		<table cellpadding="10">
-			<tr>
-				<th>Brand Name</th>
-				<th>Type</th>
-			</tr>
+	<div class="row box">
 
-			<% @bar.brands.each do |brand| %>
-		
-			<tr>
-				<td><%= brand.name %></td>
-				<td><%= brand.inv_brandtype %></td>
-			</tr>
+		<div class="col-6">
+			<div class="showpic">
+			<% if @bar.photos.present? %>
+				<%= image_tag((@bar.photos.last.picture.url), class: 'bar_image') %><br />
+				<p class="caption"><%= @bar.photos.last.caption %></p>
+			<% else %>
+				:( <- no pic sadface
 			<% end %>
-		</table>
+			</div>
+		</div>
+
+		<div class="col-6">
+
+		<!-- Display map if coordinates are present -->
+
+		<% if @bar.latitude.present? && @bar.longitude.present? %>
+
+		  <script>
+
+		    function initMap() {
+		      var myLatLng = {lat: <%= @bar.latitude %>, lng: <%= @bar.longitude%>};
+
+		      var map = new google.maps.Map(document.getElementById('map'), {
+		        zoom: 13,
+		        center: myLatLng
+		      });
+
+		      var marker = new google.maps.Marker({
+		        position: myLatLng,
+		        map: map,
+		        title: '<%= @bar.name %>'
+		      });
+		    }
+		  </script>
+
+		  <script async defer
+		  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_API_KEY"] %>&callback=initMap">
+		  </script>
+
+		  <div id="map"></div>
+
+	  <% end %>
+
+	  <!-- END MAP -->
+
+		</div>
 
 	</div>
+
+	<!--
+
+	<%# Userlocation.last.attributes.except("id", "created_at", "updated_at", "withindistance").each do |name, value| %>
+		<%# name %>
+		<%# value %>
+	<%# end %>
+
+	-->
+
+	<p>About <%= @bar.name %>:<br />
+	<%= @bar.description %></p>
+
+	<br />
+
+	<!-- show brands for bar, if they exist -->
+	<% if @bar.brands.present? %>
+
+		<div>
+			<h5>Proudly serving these premium brands:</h5>
+
+			<% @barbrands = @bar.brands.sort_by{ |t| [t.brandtype, t.name] } %>
+			<% @barbrands.each do |brand| %>
+				<%= brand.name %> (<%= brand.inv_brandtype %>)
+				<% if @barbrands.last != brand %>
+					,&nbsp;
+				<% end %>
+			<% end %>
+
+		</div>
+
+	<% end %>
+	<!-- END show brands -->
+
 
 	<br /><hr /><br />
 
 	<div class="float-right">
 
-		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pictureModal">
+		  Add a photo
+		</button>
+
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 		  Add a Brand
 		</button>
 
 		<%= link_to 'Edit Bar', edit_bar_path(@bar), class: 'btn btn-primary' %>
-		<%= link_to 'Destroy', bar_path(@bar), method: :delete, data: {confirm: 'Are you sure you want to delete this bar?'},class: 'btn btn-danger' %>
+		<%= link_to 'Delete Bar', bar_path(@bar), method: :delete, data: {confirm: 'Are you sure you want to delete this bar?'},class: 'btn btn-danger' %>
 
 	</div>
 
 	<div class="clear"></div>
 
-	<%= simple_form_for @photo, url: bar_photos_path(@bar) do |f| %>
-		<%= f.input :picture %>
-		<%= f.input :caption, label: 'Caption or Copyright Info:' %>
-		<br />
-		<%= f.submit 'Add a Photo', class: 'btn btn-primary' %>
-	<% end %>
-
 	<br /><br />
 
 	<div>
 		<% if @bar.photos.present? %>
-			<%= image_tag((@bar.photos.last.picture.url), class: 'bar_image') %><br />
+			<%= image_tag((@bar.photos.last.picture.url), class: 'bar_image') %>
 			<%= @bar.photos.last.caption %>
 		<% end %>
 	</div>
+
 
 
 	<!-- Modal -->
@@ -120,5 +149,34 @@
 	  </div>
 	</div>
 
+	<!-- Picture Modal -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	        </button>
+	        <h4 class="modal-title" id="myModalLabel">Add a photo</h4>
+	      </div>
+	        <%= simple_form_for @photo, url: bar_photos_path(@bar) do |f| %>
+		        <div class="modal-body">
+							<%= f.input :picture %>
+							<%= f.input :caption, label: 'Caption or Copyright Info:' %>
+						</div>
+						<div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <%= f.submit 'Add a Photo', class: 'btn btn-primary' %>
+		      	</div>
+					<% end %>
+	      </div>
+
+	    </div>
+	  </div>
+	</div>
+
 	<br /><br />
 </div>
+

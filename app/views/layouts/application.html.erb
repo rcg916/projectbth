@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ProjectBTH</title>
+    <title>ProjectBTH - Party responsibly.</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,28 @@
   </head>
 
   <body>
+
+    <!-- split header -->
+    <div class="row">
+      <div class="col-5 offset-1 brand">
+        <p>projectBTH -beta</p>
+      </div>
+      <div class="col-5 text-right">
+        <p>test</p>
+      </div>
+    </div>
+
     <%= yield %>
+
+    <!-- split footer -->
+    <div class="row">
+      <div class="col-5 offset-1">
+        <p>footer1</p>
+      </div>
+      <div class="col-5 text-right">
+        <p>footer2</p>
+      </div>
+    </div>
+
   </body>
 </html>
