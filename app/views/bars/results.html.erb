@@ -107,15 +107,14 @@
 				<% if bar.photos.present? %>
 					<div>
 						<%= image_tag((bar.photos.last.picture.url), class: 'bar_image') %><br />
-						<%= bar.photos.last.caption %>
+						<p class="text-center"><%= bar.photos.last.caption %></p>
 					</div>
 				<% else %>
 					<div>
+						<%= image_tag(('defaultbarimage.jpg'), class: 'bar_image') %><br />
 						<p class="text-center"><small>We need a photo for <%= bar.name %>. Have one? Email us! :)</small></p>
 					</div>
 				<% end %>
-
-				<br />
 
 				<div>
 					<%= bar.description %>
@@ -125,7 +124,7 @@
 				<%= link_to 'Directions', "https://www.google.com/maps/dir/?api=1&origin='#{@geocodeduserlocation.last.address}'+&destination='#{bar.address}'+&travelmode=driving", target: "_blank" %>
 
 				<br />
-				<small><em>For accurate directions, use an address in your Party Search</em></small>
+				<small><em>(For accurate directions, use an address in your Party Search)</em></small>
 
 			</div>
 			<!-- end right column -->
