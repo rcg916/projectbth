@@ -8,12 +8,14 @@
 
 	<h5>Search term: <%= @userlocation.searchterm %></h5>
 
-	Searching for bars with 
+	<div>
+		Searching for bars with 
 	<% @userlocation.wantedactivities.each do |activity| %>
 		<%= activity %>
 	<% end %>
 	
 	in <%= @geocodeduserlocation.last.city %>, <%= @geocodeduserlocation.last.state %>
+	</div>
 
 	<hr />
 
@@ -30,23 +32,26 @@
 				<%= bar.address %><br />
 
 				<% bar.activities.each do |activity| %>
-					<span class="badge badge-success"><%= activity.capitalize %></span>
+					<% if activity == "livemusic" %>
+						<% activity = "Live Music" %>
+					<% elsif activity == "sportstv" %>
+						<% activity = "Sports & Tvs" %>
+					<% elsif activity == "happyhour" %>
+						<% activity = "Happy Hour" %>
+					<% end %>
+					<span class="badge badge-success"><%= activity.titlecase %></span>
 				<% end %>
-				<br />
+				<br /><br />
 
-				<% @incommon = bar.activities & @userlocation.wantedactivities %><br />
-				Activities in common with search: 
-				<% @incommon.each do |activity| %>
-				<%= activity %>
-				<% end %>
-				<br />
-				<%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %><br /><br />
+				<% @incommon = bar.activities & @userlocation.wantedactivities %>
+
+				<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
+				<% if @perc > 39 %> <!-- checking to see if alert should show or not -->
 
 
 				<!--display alert if match, or display other msg -->
-				<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
-				<div class="col-10 offset-1">
-
+				
+				<div>
 					<% if @perc >= 100 %>
 						<div class="row boom">
 							<div class="col-4">
@@ -59,13 +64,13 @@
 
 					<% elsif @perc < 100 && @perc > 65 %>
 						
-						<div class="maybe">
+						<div class="row maybe">
 							<h5>Pretty Good!<br /><small>This bar has most of what you are looking for.</small></h5>
 						</div>
 
 					<% elsif @perc <= 65 && @perc > 39 %>
 						
-						<div class="maybe">
+						<div class="row maybe">
 							<h5>Maybe? Could be?<br /><small>This bar has some of what you are looking for.</small></h5>
 						</div>
 
@@ -74,14 +79,52 @@
 				</div>
 				<!-- end alert -->
 
+				<% end %> <!-- end alert check -->
+
+
+				<!-- START meter for Party Score -->
+
+				<div id="meterdiv">
+					<table id="metertable">
+						<tr>
+							<% @perc.round(0).times do %>
+								<td class="meterstripes"></td>
+							<% end %>
+						</tr>
+					</table>
+				</div >
+				<div id="score">
+				<table>
+					<tr>
+						<td>Your Party Score for this bar is <strong><%= @perc.round(0) %></strong></td>
+					</tr>
+				</table>
+				</div>
+
+				<!-- END meter -->
+
 				<br />
+
+				<%= bar.name %> has <%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %> activities from your search:<br /><br />
+				<ul>
+				<% @incommon.each do |activity| %>
+					<% if activity == "livemusic" %>
+						<% activity = "Live Music" %>
+					<% elsif activity == "sportstv" %>
+						<% activity = "Sports & Tvs" %>
+					<% elsif activity == "happyhour" %>
+						<% activity = "Happy Hour" %>
+					<% end %>
+					<li><%= activity.titlecase %></li>
+				<% end %>
+				</ul>
 
 
 				<!-- show brands for bar, if they exist -->
 				<% if bar.brands.present? %>
 
 					<div>
-						<h5>Proudly serving these premium brands:</h5>
+						<h5>Proudly serving these brands:</h5>
 
 						<% @barbrands = bar.brands.sort_by{ |t| [t.brandtype, t.name] } %>
 						<% @barbrands.each do |brand| %>
@@ -93,6 +136,10 @@
 
 					</div>
 
+				<% else %>
+					<div>
+						<p><small>No brands added for this bar yet. Check back soon!</small></p>
+					</div>
 				<% end %>
 				<!-- END show brands -->
 
@@ -112,7 +159,7 @@
 				<% else %>
 					<div>
 						<%= image_tag(('defaultbarimage.jpg'), class: 'bar_image') %><br />
-						<p class="text-center"><small>We need a photo for <%= bar.name %>. Have one? Email us! :)</small></p>
+						<p class="text-center">We need a photo for <%= bar.name %>. Have one? Email us! :)</p>
 					</div>
 				<% end %>
 

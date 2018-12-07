@@ -5,7 +5,14 @@
 	<%= @bar.address %><br />
  
 	<% @bar.activities.each do |activity| %>
-		<span class="badge badge-success"><%= activity.capitalize %></span>
+		<% if activity == "livemusic" %>
+			<% activity = "Live Music" %>
+		<% elsif activity == "sportstv" %>
+			<% activity = "Sports & Tvs" %>
+		<% elsif activity == "happyhour" %>
+			<% activity = "Happy Hour" %>
+		<% end %>
+		<span class="badge badge-success"><%= activity.titlecase %></span>
 	<% end %>
 
 	<br />
@@ -18,7 +25,8 @@
 				<%= image_tag((@bar.photos.last.picture.url), class: 'bar_image') %><br />
 				<p class="caption"><%= @bar.photos.last.caption %></p>
 			<% else %>
-				:( <- no pic sadface
+				<%= image_tag(('defaultbarimage.jpg'), class: 'bar_image') %><br />
+				<p class="text-center">We need a photo for <%= @bar.name %>. Have one? Email us! :)</p>
 			<% end %>
 			</div>
 		</div>
