@@ -1,4 +1,7 @@
  class BarsController < ApplicationController
+
+ 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+
 	def show
 		@bar = Bar.find(params[:id])
 		@brand = Brand.new
@@ -17,11 +20,19 @@
 	end
 
 	def new
-		@bar = Bar.new
+		if current_user.admin?
+			@bar = Bar.new
+		else
+			redirect_to root_path
+		end
 	end
 
 	def edit
-		@bar = Bar.find(params[:id])
+		if current_user.admin?
+			@bar = Bar.find(params[:id])
+		else
+			redirect_to root_path
+		end
 	end
 
 	def update
