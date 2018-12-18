@@ -68,6 +68,6 @@
 
   def bar_params
     params.require(:bar).permit(:name, :address, :description, :livemusic, :pool, :darts, :cornhole, :karaoke, 
-    	:dancing, :food, :beer, :vodka, :whiskey, :wine, :sportstv, :tequila, :happyhour, :cocktails)
+    	:dancing, :food, :beer, :vodka, :whiskey, :wine, :sportstv, :tequila, :happyhour, :cocktails, :websiteurl)
   end
 end

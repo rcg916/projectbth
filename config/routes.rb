@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
 	root 'userlocations#search'
 	resources :userlocations, only: :create
 	resources :bars do
