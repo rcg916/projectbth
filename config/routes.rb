@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'favoritebars/update'
   devise_for :users
 	root 'userlocations#search'
 	resources :userlocations, only: :create
@@ -7,4 +8,5 @@ Rails.application.routes.draw do
 		resources :photos, only: :create
 	end
 	get '/results', to: 'bars#results'
+	resources :users, only: :show
 end

@@ -1,0 +1,8 @@
+<h2>User Dashboard</h2>
+
+<%= @user.email %><br />
+<% @user.favoritebars.each do |favorite| %>
+<%= favorite.bar.name %><br />
+<% end %>
+
+<br /><br />

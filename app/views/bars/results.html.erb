@@ -6,6 +6,15 @@
 		<button><%= link_to "Meh. Let's try again.", root_path, class: 'btn bth-primary' %></button>
 	</div>
 
+	<!-- test code for favorite bars -->
+	<% if current_user %>
+		<h1>Your favorite bars </h1>
+		<% current_user.favoritebars.each do |favorite| %>
+			<%= favorite.bar.name %><br />
+		<% end %>
+	<% end %>
+	<!-- END test code -->
+
 	<h5>Search term: <%= @userlocation.searchterm %></h5>
 
 	<div>
@@ -27,6 +36,7 @@
 		<div class="row box">
 			<!-- left column -->
 			<div class="col-6">
+
 				<small><em>About <%= bar.distance_from(@geocodeduserlocation.last.coordinates).floor(1) %> miles away</em></small><br />
 				<h3><%= link_to bar.name, bar_path(bar) %></h3>
 				<%= bar.address %><br />
@@ -43,81 +53,93 @@
 				<% end %>
 				<br /><br />
 
-				<% @incommon = bar.activities & @userlocation.wantedactivities %>
 
-				<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
-				<% if @perc > 39 %> <!-- checking to see if alert should show or not -->
+				<!-- Check if they marked any boxes -->
+
+				<% if @userlocation.wantedactivities.count != 0 %>
 
 
-				<!--display alert if match, or display other msg -->
-				
-				<div>
-					<% if @perc >= 100 %>
-						<div class="row boom">
-							<div class="col-4">
-								<%= image_tag 'star-struck-icon.png', class: 'boomface' %>
+					<% @incommon = bar.activities & @userlocation.wantedactivities %>
+
+					<% @perc = (@incommon.count.to_f / @userlocation.wantedactivities.count) * 100 %>
+					<% if @perc > 39 %> <!-- checking to see if alert should show or not -->
+
+
+					<!--display alert if match, or display other msg -->
+					
+					<div>
+						<% if @perc >= 100 %>
+							<div class="row boom">
+								<div class="col-4">
+									<%= image_tag 'star-struck-icon.png', class: 'boomface' %>
+								</div>
+								<div class="col-8">
+									<h5>BOOM! Party Alert!<br /><small>This bar has all of the things you were looking for.</small></h5>
+								</div>
 							</div>
-							<div class="col-8">
-								<h5>BOOM! Party Alert!<br /><small>This bar has all of the things you were looking for.</small></h5>
+
+						<% elsif @perc < 100 && @perc > 65 %>
+							
+							<div class="row maybe">
+								<h5>Pretty Good!<br /><small>This bar has most of what you are looking for.</small></h5>
 							</div>
-						</div>
 
-					<% elsif @perc < 100 && @perc > 65 %>
-						
-						<div class="row maybe">
-							<h5>Pretty Good!<br /><small>This bar has most of what you are looking for.</small></h5>
-						</div>
+						<% elsif @perc <= 65 && @perc > 39 %>
+							
+							<div class="row maybe">
+								<h5>Maybe? Could be?<br /><small>This bar has some of what you are looking for.</small></h5>
+							</div>
 
-					<% elsif @perc <= 65 && @perc > 39 %>
-						
-						<div class="row maybe">
-							<h5>Maybe? Could be?<br /><small>This bar has some of what you are looking for.</small></h5>
-						</div>
+						<% end %>
 
-					<% end %>
+					</div>
+					<!-- end alert -->
 
-				</div>
-				<!-- end alert -->
-
-				<% end %> <!-- end alert check -->
+					<% end %> <!-- end alert check -->
 
 
-				<!-- START meter for Party Score -->
+					<!-- START meter for Party Score -->
 
-				<div id="meterdiv">
-					<table id="metertable">
+					<div id="meterdiv">
+						<table id="metertable">
+							<tr>
+								<% @perc.round(0).times do %>
+									<td class="meterstripes"></td>
+								<% end %>
+							</tr>
+						</table>
+					</div >
+					<div id="score">
+					<table>
 						<tr>
-							<% @perc.round(0).times do %>
-								<td class="meterstripes"></td>
-							<% end %>
+							<td>Your Party Score for this bar is <strong><%= @perc.round(0) %></strong></td>
 						</tr>
 					</table>
-				</div >
-				<div id="score">
-				<table>
-					<tr>
-						<td>Your Party Score for this bar is <strong><%= @perc.round(0) %></strong></td>
-					</tr>
-				</table>
-				</div>
+					</div>
 
-				<!-- END meter -->
+					<!-- END meter -->
 
-				<br />
+					<br />
 
-				<%= bar.name %> has <%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %> activities from your search<br /><br />
-				<ul>
-				<% @incommon.each do |activity| %>
-					<% if activity == "livemusic" %>
-						<% activity = "Live Music" %>
-					<% elsif activity == "sportstv" %>
-						<% activity = "Sports & Tvs" %>
-					<% elsif activity == "happyhour" %>
-						<% activity = "Happy Hour" %>
-					<% end %>
-					<li><%= activity.titlecase %></li>
+					<div>
+						<%= bar.name %> has <%= @incommon.count %> out of <%= @userlocation.wantedactivities.count %> activities from your search<br /><br />
+						<ul>
+						<% @incommon.each do |activity| %>
+							<% if activity == "livemusic" %>
+								<% activity = "Live Music" %>
+							<% elsif activity == "sportstv" %>
+								<% activity = "Sports & Tvs" %>
+							<% elsif activity == "happyhour" %>
+								<% activity = "Happy Hour" %>
+							<% end %>
+							<li><%= activity.titlecase %></li>
+						<% end %>
+						</ul>
+					</div>
+
 				<% end %>
-				</ul>
+
+				<!-- END check for checked boxes -->
 
 
 				<!-- show brands for bar, if they exist -->

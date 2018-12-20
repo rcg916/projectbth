@@ -1,5 +1,10 @@
 <div class="col-10 offset-1 main">
 
+	<% if current_user %>
+		<h5 class="text-center">What's up, <%= current_user.email %><br /></h5>
+		<br />
+	<% end %>
+
 	<h5 class="text-center">We want to help you find <em>your</em> bar.</h5>
 	<h3 class="text-center">What are you looking to do and what do you like to drink?</h3>
 	<br />
@@ -8,7 +13,7 @@
 		<%= simple_form_for @userlocation do |f| %>
 			<div class="row">
 				<div class="col-8">
-					<%= f.input :searchterm, label: 'Enter an address, city/state, zip-code, or landmark:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841 OR Golden One Center' %>
+					<%= f.input :searchterm, label: 'Enter an address, city/state, zip code, or landmark:', hint: 'Examples: 123 Main St. Sacramento, CA OR Sacramento, CA OR 95841 OR Golden One Center' %>
 				</div>
 				<div class="col-4">
 					<%= f.input :withindistance, label: 'Enter distance for search:', hint: 'Enter distance in miles' %>

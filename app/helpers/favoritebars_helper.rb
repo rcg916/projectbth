@@ -1,0 +1,2 @@
+module FavoritebarsHelper
+end

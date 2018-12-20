@@ -6,6 +6,7 @@
 		@bar = Bar.find(params[:id])
 		@brand = Brand.new
 		@photo = Photo.new
+		@favoritebar_exists = Favoritebar.where(bar: @bar, user: current_user) == [] ? false : true
 	end
 
 	def results

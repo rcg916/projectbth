@@ -1,5 +1,11 @@
 <div class="col-10 offset-1 main">
 
+	<div class="float-right">
+		<% if current_user %>
+			<%= link_to favoritebar_text, favoritebars_update_path(bar: @bar), id: 'favoritebar_link', remote: true %>
+		<% end %>
+	</div>
+
 	<h2><%= @bar.name %></h2>
 
 	<%= @bar.address %><br />
