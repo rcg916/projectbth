@@ -102,6 +102,11 @@
 			<% @barbrands = @bar.brands.sort_by{ |t| [t.brandtype, t.name] } %>
 			<% @barbrands.each do |brand| %>
 				<%= brand.name %> (<%= brand.inv_brandtype %>)
+
+				<% if current_user && current_user.admin? %>
+					<%= link_to 'X', bar_brand_path(@bar, brand), method: :delete, data: {confirm: 'Are you sure you want to delete this brand?'},class: 'btn btn-danger btn-sm' %>
+				<% end %>
+
 				<% if @barbrands.last != brand %>
 					,&nbsp;
 				<% end %>
