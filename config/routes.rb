@@ -9,4 +9,5 @@ Rails.application.routes.draw do
 	end
 	get '/results', to: 'bars#results'
 	resources :users, only: :show
+	get '/help', to: 'userlocations#help'
 end

@@ -3,6 +3,9 @@ class UserlocationsController < ApplicationController
 		@userlocation = Userlocation.new
 	end
 
+  def help
+  end
+
 	def create
     Userlocation.create(userlocation_params)
     @temp = []

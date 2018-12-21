@@ -1,8 +1,16 @@
-<h2>User Dashboard</h2>
+<div class="col-10 offset-1 main">
 
-<%= @user.email %><br />
-<% @user.favoritebars.each do |favorite| %>
-<%= favorite.bar.name %><br />
-<% end %>
+	<h4><%= @user.email %></h4>
+	<br />
 
-<br /><br />
+	<div class="box">
+
+		<h4>My favorite bars:</h4><br />
+
+		<% @user.favoritebars.each do |favorite| %>
+			<%= link_to favorite.bar.name, bar_path(favorite.bar) %> &nbsp;<small><%= favorite.bar.city %></small><br />
+		<% end %>
+
+	</div>
+
+</div>
