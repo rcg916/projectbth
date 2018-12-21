@@ -1,6 +1,10 @@
  class BarsController < ApplicationController
 
- 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+ 	before_action :authenticate_user!, only: [:index, :new, :create, :edit, :update, :destroy]
+
+ 	def index
+ 		@bars = Bar.all.sort_by{ |t| [t.state, t.city] }
+ 	end
 
 	def show
 		@bar = Bar.find(params[:id])

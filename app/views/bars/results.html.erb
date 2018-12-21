@@ -120,7 +120,8 @@
 					<br />
 
 					<div>
-						<p class="boldsmall"><%= bar.name %> has <%= @incommon.count %> of <%= @userlocation.wantedactivities.count %> drinks/activities from your search:</p>
+						<p class="boldsmall"><%= bar.name %> was <%= @incommon.count %> for 
+							<%= @userlocation.wantedactivities.count %> when it came to the drinks and activities that you cared about most</p>
 
 						<ul>
 						<% @incommon.each do |activity| %>
@@ -145,20 +146,12 @@
 
 				<!-- show brands for bar, if they exist -->
 				<% if bar.brands.present? %>
-
 					<div>
 						<h5>Proudly serving these brands:</h5>
-
-						<% @barbrands = bar.brands.sort_by{ |t| [t.brandtype, t.name] } %>
-						<% @barbrands.each do |brand| %>
+						<% bar.brands.sort_by{ |t| [t.brandtype, t.name] }.each do |brand| %>
 							<%= brand.name %> (<%= brand.inv_brandtype %>)
-							<% if @barbrands.last != brand %>
-								,&nbsp;
-							<% end %>
 						<% end %>
-
 					</div>
-
 				<% else %>
 					<div>
 						<p><small>No brands added for this bar yet. Check back soon!</small></p>

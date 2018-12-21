@@ -1,0 +1,23 @@
+<div class="col-10 offset-1 main">
+
+	<h3>Bars index</h3>
+	<br />
+
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>City</th>
+			<th>State</th>
+			<th>Favorites</th>
+		</tr>
+		<% @bars.each do |bar| %>
+			<tr>
+				<td class="barindex"><%= link_to bar.name, bar_path(bar) %></td>
+				<td class="barindex"><%= bar.city %></td>
+				<td class="barindex"><%= bar.state %></td>
+				<td class="barindex"><%= Favoritebar.where(bar: bar).count %></td>
+			</tr>
+		<% end %>
+	</table>
+
+</div>

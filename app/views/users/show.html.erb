@@ -8,7 +8,7 @@
 		<h4>My favorite bars:</h4><br />
 
 		<% @user.favoritebars.each do |favorite| %>
-			<%= link_to favorite.bar.name, bar_path(favorite.bar) %> &nbsp;<small><%= favorite.bar.city %></small><br />
+			<%= link_to favorite.bar.name, bar_path(favorite.bar) %> &nbsp;<small><%= favorite.bar.city %>, <%= favorite.bar.state %></small><br />
 		<% end %>
 
 	</div>
