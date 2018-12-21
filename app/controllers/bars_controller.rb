@@ -52,6 +52,8 @@
 
 	def destroy
 	  @bar = Bar.find(params[:id])
+	  favorites = Favoritebar.where(bar: @bar)
+	  favorites.destroy_all
 	  @bar.destroy
 	  redirect_to root_path
 	end
