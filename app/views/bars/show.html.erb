@@ -2,7 +2,7 @@
 
 	<div class="float-right">
 		<% if current_user %>
-			<%= link_to favoritebar_text, favoritebars_update_path(bar: @bar), id: 'favoritebar_link', remote: true %>
+			<%= link_to favoritebar_text, favoritebars_update_path(bar: @bar), id: 'favoritebar_link', remote: true, class: 'btn btn-primary' %>
 		<% end %>
 	</div>
 
@@ -88,7 +88,7 @@
 		<p><%= link_to 'Click to visit website', @bar.websiteurl, class: 'badge badge-primary', target: "_blank" %></p>
 	</div>
 
-	<p>About <%= @bar.name %>:<br />
+	<p><strong>About <%= @bar.name %>:</strong><br />
 	<%= @bar.description %></p>
 
 	<br />
